@@ -1,0 +1,32 @@
+# Activity Monitoring
+Katie Evans
+============================
+
+```{r setup}
+
+library(dplyr)
+library(ggplot2)
+
+#Set working directory
+setwd("~/Documents/Work/RepData_PeerAssessment1/")
+
+#Load the data
+activity <- read.table(unz("activity.zip", "activity.csv"), sep = ",", 
+                      na.strings = "NA", header = TRUE)
+
+
+```
+
+What is the mean total number of steps taken per day? Ignoring incomplete data.
+```{r mean_steps}
+
+#find the number of steps taken per day
+steps <- activity %>%
+    dplyr::group_by(date) %>%
+    dplyr::mutate(steps_per_day = sum(steps, na.rm = T))
+
+#plot histogram
+ggplot(data = steps, aes(x = steps_per_day)) +
+    geom_hist()
+
+```
